@@ -5,8 +5,13 @@ class User {
   }
 
   static setUser = (user) => {
-    localStorage.setItem("user", JSON.stringify(user));
-    this.user = user;
+    const updatedUser = { ...localStorage.getItem("user"), ...user };
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        ...updatedUser,
+      }),
+    );
   };
 
   static clearUser = () => {
@@ -14,7 +19,7 @@ class User {
   };
 
   static validateUserLogin = (user) => {
-    return user.email && user.password;
+    return user.username;
   };
 }
 

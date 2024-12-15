@@ -1,4 +1,4 @@
-import { onLoginSubmit } from "@/lib/auth/submit";
+import { onLoginSubmit, onLogoutSubmit } from "@/lib/auth/submit";
 import MainPage from "@/pages/app";
 import ErrorPage from "@/pages/error";
 import LoginPage from "@/pages/login";
@@ -21,8 +21,16 @@ const onRenderNavBar = () => {
 };
 
 const STATIC_PAGES = {
-  main: { path: "/", page: MainPage, callback: [onRenderNavBar] },
-  profile: { path: "/profile", page: ProfilePage, callback: [onRenderNavBar] },
+  main: {
+    path: "/",
+    page: MainPage,
+    callback: [onRenderNavBar, onLogoutSubmit],
+  },
+  profile: {
+    path: "/profile",
+    page: ProfilePage,
+    callback: [onRenderNavBar, onLogoutSubmit],
+  },
   login: { path: "/login", page: LoginPage, callback: [onLoginSubmit] },
   404: { path: "/404", page: ErrorPage },
 };

@@ -20,7 +20,7 @@ const NavBar = () => {
               ${
                 user
                   ? `<li>
-            <button data-path="logout" class="text-gray-600 font-bold" onclick=>로그아웃</button>
+            <button id='logout' data-path="logout" class="text-gray-600 font-bold" onclick=>로그아웃</button>
           </li>`
                   : `<li>
             <button data-path="login" class="text-gray-600 font-bold" onclick=>로그인</button>
