@@ -12,6 +12,10 @@ class User {
   static clearUser = () => {
     localStorage.removeItem("user");
   };
+
+  static validateUserLogin = (user) => {
+    return user.email && user.password;
+  };
 }
 
 export default User;

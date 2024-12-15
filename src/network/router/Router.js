@@ -1,18 +1,12 @@
+import { onLoginSubmit } from "@/lib/auth/submit";
 import MainPage from "@/pages/app";
 import ErrorPage from "@/pages/error";
 import LoginPage from "@/pages/login";
 import ProfilePage from "@/pages/profile";
 import { log } from "@/util/common/log";
 
-const STATIC_PAGES = {
-  main: { path: "/", page: MainPage },
-  profile: { path: "/profile", page: ProfilePage },
-  login: { path: "/login", page: LoginPage },
-  404: { path: "/404", page: ErrorPage },
-};
-
-const replaceBodyHtml = (render) => {
-  document.body.innerHTML = render();
+// TODO : 적절한 도메인으로 빼기
+const onRenderNavBar = () => {
   const rootNav = document.querySelector("nav#root-nav");
   if (!rootNav) return;
 
@@ -24,6 +18,13 @@ const replaceBodyHtml = (render) => {
     e.preventDefault(); // TO CHECK: 이벤트 전파 왜 막는거지?
     router.navigate(STATIC_PAGES[path].path);
   });
+};
+
+const STATIC_PAGES = {
+  main: { path: "/", page: MainPage, callback: [onRenderNavBar] },
+  profile: { path: "/profile", page: ProfilePage, callback: [onRenderNavBar] },
+  login: { path: "/login", page: LoginPage, callback: [onLoginSubmit] },
+  404: { path: "/404", page: ErrorPage },
 };
 
 class Router {
@@ -64,6 +65,11 @@ class Router {
   _handlePopState = () => {
     this.route(window.location.pathname);
   };
+
+  replaceBodyHtml = (render, ...callback) => {
+    document.body.innerHTML = render();
+    callback?.forEach((f) => f(this));
+  };
 }
 
 const router = new Router();
@@ -72,7 +78,9 @@ const router = new Router();
 for (const key in STATIC_PAGES) {
   const value = STATIC_PAGES[key];
   router.addRoute(value.path, () => {
-    replaceBodyHtml(value.page);
+    value.callback
+      ? router.replaceBodyHtml(value.page, ...value.callback)
+      : router.replaceBodyHtml(value.page);
   });
 }
 
