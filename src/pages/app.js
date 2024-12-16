@@ -1,9 +1,17 @@
 import Footer from "@/components/footer/Footer";
 import Header from "@/components/header/Header";
+import { onLogoutSubmit } from "@/lib/auth/submit";
 import User from "@/lib/auth/User";
 import Component from "@/lib/core/Component";
+import { delegateNavButtonEvents } from "@/lib/nav/navEvent";
 
 class MainPage extends Component {
+  setEvent() {
+    this.addEvent("click", "nav#root-nav", (e) => {
+      delegateNavButtonEvents(e);
+      onLogoutSubmit(e);
+    });
+  }
   template() {
     return `
   <div class="bg-gray-100 min-h-screen flex justify-center">
