@@ -12,10 +12,12 @@ class User {
         ...updatedUser,
       }),
     );
+    return updatedUser;
   };
 
   static clearUser = () => {
     localStorage.removeItem("user");
+    return null;
   };
 
   static validateUserLogin = (user) => {
