@@ -69,9 +69,7 @@ const router = new Router();
 for (const key in STATIC_PAGES) {
   const value = STATIC_PAGES[key];
   router.addRoute(value.path, () => {
-    value.callback
-      ? router.replaceBodyHtml(value.page, ...value.callback)
-      : router.replaceBodyHtml(value.page);
+    router.replaceBodyHtml(value.page);
   });
 }
 

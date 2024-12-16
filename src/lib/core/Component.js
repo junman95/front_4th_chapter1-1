@@ -1,9 +1,11 @@
 class Component {
   constructor(targetDOM) {
     this.targetDOM = targetDOM;
+    this.eventHandlers = [];
     this.setup();
     this.setEvent();
     this.render();
+    this.mounted();
   }
 
   setup() {}
@@ -33,6 +35,7 @@ class Component {
       callback(event);
     });
   }
+  mounted() {}
 }
 
 export default Component;
