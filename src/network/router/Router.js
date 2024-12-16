@@ -1,38 +1,21 @@
-import { onLoginSubmit, onLogoutSubmit } from "@/lib/auth/submit";
 import MainPage from "@/pages/app";
 import ErrorPage from "@/pages/error";
 import LoginPage from "@/pages/login";
 import ProfilePage from "@/pages/profile";
 import { log } from "@/util/common/log";
 
-// TODO : 적절한 도메인으로 빼기
-const onRenderNavBar = () => {
-  const rootNav = document.querySelector("nav#root-nav");
-  if (!rootNav) return;
-
-  document.querySelector("nav#root-nav").addEventListener("click", (e) => {
-    // 임의로 삽입한 data-path 가 없는 dom에서 발생한 이벤트는 무시
-    if (!e.target.dataset.path) return;
-
-    const path = e.target.dataset.path;
-    e.preventDefault(); // TO CHECK: 이벤트 전파 왜 막는거지?
-    router.navigate(STATIC_PAGES[path].path);
-  });
-};
-
 const STATIC_PAGES = {
   main: {
     path: "/",
-    page: MainPage,
-    callback: [onRenderNavBar, onLogoutSubmit],
+    page: () => new MainPage(document.body),
   },
   profile: {
     path: "/profile",
-    page: ProfilePage,
-    callback: [onRenderNavBar, onLogoutSubmit],
+    page: () => new ProfilePage(document.body),
   },
-  login: { path: "/login", page: LoginPage, callback: [onLoginSubmit] },
-  404: { path: "/404", page: ErrorPage },
+  login: { path: "/login", page: () => new LoginPage(document.body) },
+  logout: { path: "/logout", page: () => {} },
+  404: { path: "/404", page: () => new ErrorPage(document.body) },
 };
 
 class Router {
@@ -75,7 +58,7 @@ class Router {
   };
 
   replaceBodyHtml = (render, ...callback) => {
-    document.body.innerHTML = render();
+    render();
     callback?.forEach((f) => f(this));
   };
 }
@@ -91,6 +74,8 @@ for (const key in STATIC_PAGES) {
       : router.replaceBodyHtml(value.page);
   });
 }
+
+window.addEventListener("load", () => router.route(window.location.pathname));
 
 export default router;
 export { STATIC_PAGES };
