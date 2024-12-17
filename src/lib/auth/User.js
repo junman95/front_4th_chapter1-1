@@ -5,7 +5,8 @@ class User {
   }
 
   static setUser = (user) => {
-    const updatedUser = { ...localStorage.getItem("user"), ...user };
+    const prev = JSON.parse(localStorage.getItem("user"));
+    const updatedUser = { ...prev, ...user };
     localStorage.setItem(
       "user",
       JSON.stringify({

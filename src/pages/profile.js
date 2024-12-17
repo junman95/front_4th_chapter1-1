@@ -2,6 +2,7 @@ import Footer from "@/components/footer/Footer";
 import Header from "@/components/header/Header";
 import { onLogoutSubmit } from "@/lib/auth/submit";
 import { onRenderNavBar } from "@/lib/nav/event";
+import { onSubmitUserData } from "@/lib/profile/submit";
 import userStore from "@/stores/UserStore";
 
 const render = () => {
@@ -17,7 +18,7 @@ const render = () => {
             <h2 class="text-2xl font-bold text-center text-blue-600 mb-8">
               내 프로필
             </h2>
-            <form>
+            <form id='profile-form'>
               <div class="mb-4">
                 <label
                   for="username"
@@ -76,6 +77,7 @@ const render = () => {
 const addEventListeners = () => {
   onRenderNavBar();
   onLogoutSubmit();
+  onSubmitUserData();
 };
 
 const ProfilePage = (dom, query) => {
