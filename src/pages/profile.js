@@ -2,8 +2,11 @@ import Footer from "@/components/footer/Footer";
 import Header from "@/components/header/Header";
 import { onLogoutSubmit } from "@/lib/auth/submit";
 import { onRenderNavBar } from "@/lib/nav/event";
+import userStore from "@/stores/UserStore";
 
-const render = () => `
+const render = () => {
+  const user = userStore.getUser();
+  return `
   <div id="root">
     <div class="bg-gray-100 min-h-screen flex justify-center">
       <div class="max-w-md w-full">
@@ -19,13 +22,12 @@ const render = () => `
                 <label
                   for="username"
                   class="block text-gray-700 text-sm font-bold mb-2"
-                  >사용자 이름</label
-                >
+                  >사용자 이름</label>
                 <input
                   type="text"
                   id="username"
                   name="username"
-                  value="홍길동"
+                  value="${user.username}"
                   class="w-full p-2 border rounded"
                 />
               </div>
@@ -33,13 +35,12 @@ const render = () => `
                 <label
                   for="email"
                   class="block text-gray-700 text-sm font-bold mb-2"
-                  >이메일</label
-                >
+                  >이메일</label>
                 <input
                   type="email"
                   id="email"
                   name="email"
-                  value="hong@example.com"
+                  value="${user.email}"
                   class="w-full p-2 border rounded"
                 />
               </div>
@@ -47,16 +48,13 @@ const render = () => `
                 <label
                   for="bio"
                   class="block text-gray-700 text-sm font-bold mb-2"
-                  >자기소개</label
-                >
+                  >자기소개</label>
                 <textarea
                   id="bio"
                   name="bio"
                   rows="4"
-                  class="w-full p-2 border rounded"
-                >
-안녕하세요, 항해플러스에서 열심히 공부하고 있는 홍길동입니다.</textarea
-                >
+                  class="w-full p-2 border rounded">
+                  ${user.bio}</textarea>
               </div>
               <button
                 type="submit"
@@ -73,6 +71,7 @@ const render = () => `
     </div>
   </div>
 `;
+};
 
 const addEventListeners = () => {
   onRenderNavBar();
