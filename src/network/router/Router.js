@@ -2,6 +2,7 @@ import MainPage from "@/pages/app";
 import ErrorPage from "@/pages/error";
 import LoginPage from "@/pages/login";
 import ProfilePage from "@/pages/profile";
+import userStore from "@/stores/UserStore";
 import { log } from "@/util/common/log";
 
 // TODO : 적절한 도메인으로 빼기
@@ -13,9 +14,23 @@ const STATIC_PAGES = {
   },
   profile: {
     path: "/profile",
+    guards: [
+      () => {
+        if (userStore.getUser() === null) return "/login";
+      },
+    ],
     page: ProfilePage,
   },
-  login: { path: "/login", page: LoginPage },
+  login: {
+    path: "/login",
+    guards: [
+      () => {
+        if (userStore.getUser()) return "/";
+      },
+    ],
+    page: LoginPage,
+  },
+  logout: { path: "/logout", page: () => null },
   404: { path: "/404", page: ErrorPage },
 };
 
@@ -58,9 +73,20 @@ class Router {
     this.route(window.location.pathname);
   };
 
-  replaceBodyHtml = (render, ...callback) => {
-    render(document.body);
-    callback?.forEach((f) => f(this));
+  replaceBodyHtml = (render, ...guards) => {
+    let skip = false;
+    if (guards) {
+      for (const guard of guards) {
+        const redirectPath = guard();
+        if (redirectPath) {
+          this.navigate(redirectPath);
+          skip = true;
+          return;
+        }
+      }
+    }
+    console.log(render);
+    !skip && render(document.body);
   };
 }
 
@@ -70,8 +96,8 @@ const router = new Router();
 for (const key in STATIC_PAGES) {
   const value = STATIC_PAGES[key];
   router.addRoute(value.path, () => {
-    value.callback
-      ? router.replaceBodyHtml(value.page, ...value.callback)
+    value.guards
+      ? router.replaceBodyHtml(value.page, ...value.guards)
       : router.replaceBodyHtml(value.page);
   });
 }
