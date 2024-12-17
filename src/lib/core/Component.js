@@ -1,19 +1,24 @@
 class Component {
-  constructor(targetDOM) {
+  constructor(targetDOM, store) {
     this.targetDOM = targetDOM;
+    this.store = store;
+    this.store && this.store.addObserver(this);
     this.eventListeners = [];
     this.setup();
     this.setEvent();
     this.render();
-    this.mounted();
   }
 
   setup() {}
   template() {
     return "";
   }
-  render() {
-    this.targetDOM.innerHTML = this.template();
+  render(state) {
+    this.targetDOM.innerHTML = this.template(state);
+    this.mounted();
+  }
+  update(state) {
+    this.render(state);
   }
   setEvent() {}
   setState(newState) {

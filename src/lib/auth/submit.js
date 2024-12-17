@@ -1,5 +1,6 @@
 import router, { STATIC_PAGES } from "@/network/router/Router";
 import User from "./User";
+import userStore from "@/stores/UserStore";
 
 const onLoginSubmit = (e) => {
   e.preventDefault(); //form의 기본 제출 동작 제거
@@ -16,13 +17,13 @@ const onLoginSubmit = (e) => {
     return;
   }
 
-  User.setUser(user);
+  userStore.setUser(user);
   router.navigate(STATIC_PAGES.main.path);
 };
 
 const onLogoutSubmit = (e) => {
   if (e.target.dataset.path !== "logout") return;
-  User.clearUser();
+  userStore.clearUser();
   router.navigate(STATIC_PAGES.main.path);
 };
 

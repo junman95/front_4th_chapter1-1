@@ -1,5 +1,6 @@
-import User from "@/lib/auth/User";
+import userStore from "@/stores/UserStore";
 import NavTab from "./NavTab";
+import Component from "@/lib/core/Component";
 
 const TAB_ITEMS = {
   main: {
@@ -23,10 +24,13 @@ const TAB_ITEMS = {
 const TABS_WITHOUT_USER = [TAB_ITEMS.main, TAB_ITEMS.login];
 const TABS_WITH_USER = [TAB_ITEMS.main, TAB_ITEMS.profile, TAB_ITEMS.logout];
 
-const NavBar = () => {
-  const user = User.getUser();
-  const tabItems = user ? TABS_WITH_USER : TABS_WITHOUT_USER;
-  return `
+class NavBar extends Component {
+  template(state) {
+    console.log(state, "navbar state");
+    console.log(userStore._getState(), "navbar userStore");
+    const user = state?.user;
+    const tabItems = user ? TABS_WITH_USER : TABS_WITHOUT_USER;
+    return `
 <nav id='root-nav' class="bg-white shadow-md p-2 sticky top-14">
         <ul class="flex justify-around">
           ${tabItems.map((item) => NavTab(item)).join("")} 
@@ -34,6 +38,7 @@ const NavBar = () => {
         </ul>
       </nav>
       `;
-};
+  }
+}
 
 export default NavBar;
