@@ -1,4 +1,6 @@
-const LoginPage = () => `
+import { onLoginSubmit } from "@/lib/auth/submit";
+
+const render = () => `
   <main class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
       <h1 class="text-2xl font-bold text-center text-blue-600 mb-8">항해플러스</h1>
@@ -21,5 +23,16 @@ const LoginPage = () => `
     </div>
   </main>
 `;
+
+const addEventListeners = () => {
+  onLoginSubmit();
+};
+
+const LoginPage = (dom, query) => {
+  if (!query) {
+    dom.innerHTML = render();
+  }
+  addEventListeners();
+};
 
 export default LoginPage;

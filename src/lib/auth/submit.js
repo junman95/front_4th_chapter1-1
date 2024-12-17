@@ -1,8 +1,9 @@
-import { STATIC_PAGES } from "@/network/router/Router";
+import router, { STATIC_PAGES } from "@/network/router/Router";
 import User from "./User";
 import { log } from "@/util/common/log";
+import userStore from "@/stores/UserStore";
 
-const onLoginSubmit = (router) => {
+const onLoginSubmit = () => {
   document.querySelector("form").addEventListener("submit", (e) => {
     e.preventDefault(); //form의 기본 제출 동작 제거
     const formData = new FormData(e.target);
@@ -18,15 +19,15 @@ const onLoginSubmit = (router) => {
       return;
     }
 
-    User.setUser(user);
+    userStore.setUser(user);
     router.navigate(STATIC_PAGES.main.path);
   });
 };
 
-const onLogoutSubmit = (router) => {
+const onLogoutSubmit = () => {
   document.querySelector("nav")?.addEventListener("click", (e) => {
     if (e.target.dataset.path !== "logout") return;
-    User.clearUser();
+    userStore.clearUser();
     log(STATIC_PAGES.login.path);
     router.navigate(STATIC_PAGES.main.path);
   });

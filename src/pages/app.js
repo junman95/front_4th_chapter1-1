@@ -1,8 +1,15 @@
 import Footer from "@/components/footer/Footer";
 import Header from "@/components/header/Header";
+import { onLogoutSubmit } from "@/lib/auth/submit";
 import User from "@/lib/auth/User";
+import { onRenderNavBar } from "@/lib/nav/event";
 
-const MainPage = () => {
+const addEventListeners = () => {
+  onRenderNavBar();
+  onLogoutSubmit();
+};
+
+const render = () => {
   const user = User.getUser();
   return `
   <div class="bg-gray-100 min-h-screen flex justify-center">
@@ -112,6 +119,13 @@ const MainPage = () => {
     </div>
   </div>
 `;
+};
+
+const MainPage = (dom, query) => {
+  if (!query) {
+    dom.innerHTML = render();
+  }
+  addEventListeners();
 };
 
 export default MainPage;

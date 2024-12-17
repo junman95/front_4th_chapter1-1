@@ -11,13 +11,15 @@ class UserStore extends Store {
   };
 
   setUser = (user) => {
-    this._setState({ user: User.setUser(user) });
-    this.notifyObservers(this.state);
+    this._setState({ user });
+    User.setUser(user);
+    // this.notifyObservers(this.state);
   };
 
   clearUser = () => {
-    this._setState({ user: User.clearUser() });
-    this.notifyObservers(this.state);
+    this._setState({ user: null });
+    User.clearUser();
+    // this.notifyObservers(this.state);
   };
 }
 

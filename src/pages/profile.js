@@ -1,7 +1,9 @@
 import Footer from "@/components/footer/Footer";
 import Header from "@/components/header/Header";
+import { onLogoutSubmit } from "@/lib/auth/submit";
+import { onRenderNavBar } from "@/lib/nav/event";
 
-const ProfilePage = () => `
+const render = () => `
   <div id="root">
     <div class="bg-gray-100 min-h-screen flex justify-center">
       <div class="max-w-md w-full">
@@ -71,5 +73,17 @@ const ProfilePage = () => `
     </div>
   </div>
 `;
+
+const addEventListeners = () => {
+  onRenderNavBar();
+  onLogoutSubmit();
+};
+
+const ProfilePage = (dom, query) => {
+  if (!query) {
+    dom.innerHTML = render();
+  }
+  addEventListeners();
+};
 
 export default ProfilePage;

@@ -1,5 +1,5 @@
-import User from "@/lib/auth/User";
 import NavTab from "./NavTab";
+import userStore from "@/stores/UserStore";
 
 const TAB_ITEMS = {
   main: {
@@ -24,7 +24,7 @@ const TABS_WITHOUT_USER = [TAB_ITEMS.main, TAB_ITEMS.login];
 const TABS_WITH_USER = [TAB_ITEMS.main, TAB_ITEMS.profile, TAB_ITEMS.logout];
 
 const NavBar = () => {
-  const user = User.getUser();
+  const user = userStore.getUser();
   const tabItems = user ? TABS_WITH_USER : TABS_WITHOUT_USER;
   return `
 <nav id='root-nav' class="bg-white shadow-md p-2 sticky top-14">
