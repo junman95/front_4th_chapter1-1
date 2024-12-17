@@ -26,6 +26,7 @@ class Router {
     }
     Router.instance = this;
     this.routes = {};
+    this.currentPage = null;
     window.addEventListener("popstate", this._handlePopState);
   }
 
@@ -58,7 +59,10 @@ class Router {
   };
 
   replaceBodyHtml = (render, ...callback) => {
-    render();
+    if (this.currentPage) {
+      this.currentPage.unmount();
+    }
+    this.currentPage = render();
     callback?.forEach((f) => f(this));
   };
 }

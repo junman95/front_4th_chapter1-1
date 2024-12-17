@@ -1,7 +1,7 @@
 class Component {
   constructor(targetDOM) {
     this.targetDOM = targetDOM;
-    this.eventHandlers = [];
+    this.eventListeners = [];
     this.setup();
     this.setEvent();
     this.render();
@@ -30,12 +30,23 @@ class Component {
     const children = [...this.targetDOM.querySelectorAll(selector)];
     const isTarget = (target) =>
       children.includes(target) || target.closest(selector); // 버블링중 가까운 selector Dom 엘리먼트를 찾는다.
-    this.targetDOM.addEventListener(eventType, (event) => {
+    const handler = (event) => {
       if (!isTarget(event.target)) return false;
       callback(event);
-    });
+    };
+    this.targetDOM.addEventListener(eventType, handler);
+
+    this.eventListeners.push({ eventType, handler });
   }
   mounted() {}
+
+  unmount() {
+    this.targetDOM.innerHTML = "";
+    this.eventListeners.forEach(({ eventType, handler }) => {
+      this.targetDOM.removeEventListener(eventType, handler);
+    });
+    this.eventListeners = [];
+  }
 }
 
 export default Component;
