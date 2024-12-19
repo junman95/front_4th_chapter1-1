@@ -51,6 +51,7 @@ class Router {
     this.routes[path] = handler;
   };
 
+  // 해시 라우팅 on off 함수
   toggleHash = (fixed) => {
     this.isHash = fixed;
     if (this.isHash) {
@@ -69,6 +70,7 @@ class Router {
   };
 
   route = (path) => {
+    console.log(path, "path", this.isHash);
     const handler = this.routes[path];
     if (handler) {
       log(`Routing to ${path}`);
@@ -96,7 +98,9 @@ class Router {
     let skip = false;
     if (guards) {
       for (const guard of guards) {
+        console.log(guards, "guards");
         const redirectPath = guard();
+        console.log(redirectPath, "redirectPath");
         if (redirectPath) {
           this.navigate(redirectPath);
           skip = true;
