@@ -6,7 +6,7 @@ const render = () => `
       <h1 class="text-2xl font-bold text-center text-blue-600 mb-8">항해플러스</h1>
       <form id="login-form">
         <div class="mb-4">
-          <input required id="username" name='username' type="text" placeholder="유저 네임" class="w-full p-2 border rounded">
+          <input required id="username" name='username' type="text" placeholder="사용자 이름" class="w-full p-2 border rounded">
         </div>
         <div class="mb-6">
           <input name='password' type="password" placeholder="비밀번호" class="w-full p-2 border rounded">
@@ -31,6 +31,8 @@ const addEventListeners = () => {
 const LoginPage = (dom, query) => {
   if (!query) {
     dom.innerHTML = render();
+  } else {
+    dom.querySelector(query).innerHTML = render();
   }
   addEventListeners();
 };

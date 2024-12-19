@@ -124,6 +124,9 @@ const render = () => {
 const MainPage = (dom, query) => {
   if (!query) {
     dom.innerHTML = render();
+  } else {
+    console.log(dom.querySelector(query), query);
+    dom.querySelector(query).innerHTML = render();
   }
   addEventListeners();
 };

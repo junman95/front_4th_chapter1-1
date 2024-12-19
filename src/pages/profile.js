@@ -8,7 +8,6 @@ import userStore from "@/stores/UserStore";
 const render = () => {
   const user = userStore.getUser();
   return `
-  <div id="root">
     <div class="bg-gray-100 min-h-screen flex justify-center">
       <div class="max-w-md w-full">
         ${Header()}
@@ -70,7 +69,6 @@ const render = () => {
         ${Footer()}
       </div>
     </div>
-  </div>
 `;
 };
 
@@ -83,6 +81,8 @@ const addEventListeners = () => {
 const ProfilePage = (dom, query) => {
   if (!query) {
     dom.innerHTML = render();
+  } else {
+    dom.querySelector(query).innerHTML = render();
   }
   addEventListeners();
 };

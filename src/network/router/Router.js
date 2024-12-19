@@ -85,8 +85,7 @@ class Router {
         }
       }
     }
-    console.log(render);
-    !skip && render(document.body);
+    !skip && render(document.body, "#root");
   };
 }
 

@@ -17,6 +17,8 @@ const render = () => `
 const ErrorPage = (dom, query) => {
   if (!query) {
     dom.innerHTML = render();
+  } else {
+    dom.querySelector(query).innerHTML = render();
   }
 };
 

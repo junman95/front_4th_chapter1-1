@@ -29,7 +29,7 @@ const onLogoutSubmit = () => {
     if (e.target.dataset.path !== "logout") return;
     userStore.clearUser();
     log(STATIC_PAGES.login.path);
-    router.navigate(STATIC_PAGES.main.path);
+    router.navigate(STATIC_PAGES.login.path);
   });
 };
 
