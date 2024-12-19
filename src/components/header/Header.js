@@ -1,16 +1,19 @@
-import NavBar from "./NavBar";
+import addChildComponents from "@/lib/render/addChildComponents";
+import navbar from "./NavBar";
 
-const Header = function () {
-  function render() {
-    return `<div>
-    <header class="bg-blue-600 text-white p-4 sticky top-0">
-        <h1 class="text-2xl font-bold">항해플러스</h1>
-      </header>
-  ${NavBar()}
-  </div>`;
-  }
+const render = (dom) => {
+  document.querySelector(dom).innerHTML = `<div>
+  <header class="bg-blue-600 text-white p-4 sticky top-0">
+      <h1 class="text-2xl font-bold">항해플러스</h1>
+    </header>
+    <div id="nav-container">
+    </div>
+    </div>`;
+};
 
-  return render();
+const Header = function (dom) {
+  render(dom);
+  addChildComponents([[navbar, "#nav-container"]]);
 };
 
 export default Header;

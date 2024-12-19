@@ -2,11 +2,13 @@ import Footer from "@/components/footer/Footer";
 import Header from "@/components/header/Header";
 import { onLogoutSubmit } from "@/lib/auth/submit";
 import User from "@/lib/auth/User";
-import { onRenderNavBar } from "@/lib/nav/event";
+import { onRenderNavBar, onTemp } from "@/lib/nav/event";
+import addChildComponents from "@/lib/render/addChildComponents";
 
 const addEventListeners = () => {
   onRenderNavBar();
   onLogoutSubmit();
+  onTemp();
 };
 
 const render = () => {
@@ -14,7 +16,12 @@ const render = () => {
   return `
   <div class="bg-gray-100 min-h-screen flex justify-center">
     <div class="max-w-md w-full">
-      ${Header()}
+
+    <button id="temp">유저상태변경확인</button>
+
+    <div id='header-container'>
+      
+    </div>
       
 
       <main class="p-4">
@@ -128,6 +135,7 @@ const MainPage = (dom, query) => {
     dom.querySelector(query).innerHTML = render();
   }
   addEventListeners();
+  addChildComponents([[Header, "#header-container"]]);
 };
 
 export default MainPage;

@@ -3,6 +3,7 @@ import Header from "@/components/header/Header";
 import { onLogoutSubmit } from "@/lib/auth/submit";
 import { onRenderNavBar } from "@/lib/nav/event";
 import { onSubmitUserData } from "@/lib/profile/submit";
+import addChildComponents from "@/lib/render/addChildComponents";
 import userStore from "@/stores/UserStore";
 
 const render = () => {
@@ -10,7 +11,10 @@ const render = () => {
   return `
     <div class="bg-gray-100 min-h-screen flex justify-center">
       <div class="max-w-md w-full">
-        ${Header()}
+        
+        <div id='header-container'>
+      
+        </div>  
 
         <main class="p-4">
           <div class="bg-white p-8 rounded-lg shadow-md">
@@ -85,6 +89,7 @@ const ProfilePage = (dom, query) => {
     dom.querySelector(query).innerHTML = render();
   }
   addEventListeners();
+  addChildComponents([[Header, "#header-container"]]);
 };
 
 export default ProfilePage;

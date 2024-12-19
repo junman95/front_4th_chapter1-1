@@ -1,6 +1,9 @@
-class Store {
+import Subject from "./Subject";
+
+class Store extends Subject {
   static instance = null;
   constructor(initialState) {
+    super();
     if (Store.instance) {
       return Store.instance;
     }
@@ -10,6 +13,7 @@ class Store {
 
   _setState = (newState) => {
     this.state = { ...this.state, ...newState };
+    this.notifyObservers(this.state);
   };
 
   _getState = () => {
