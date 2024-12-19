@@ -11,6 +11,7 @@ class UserStore extends Store {
   };
 
   setUser = (user) => {
+    if (!user) return;
     this._setState({ user });
     User.setUser(user);
     // this.notifyObservers(this.state);

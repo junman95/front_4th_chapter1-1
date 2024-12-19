@@ -36,10 +36,11 @@ const STATIC_PAGES = {
 
 class Router {
   static instance = null;
-  constructor() {
+  constructor(isHash = false) {
     if (Router.instance) {
       return Router.instance;
     }
+    this.isHash = isHash;
     Router.instance = this;
     this.routes = {};
     window.addEventListener("popstate", this._handlePopState);
@@ -50,7 +51,19 @@ class Router {
     this.routes[path] = handler;
   };
 
+  toggleHash = (fixed) => {
+    this.isHash = fixed;
+    if (this.isHash) {
+      window.addEventListener("hashchange", this._handleRouteState);
+    } else {
+      window.removeEventListener("hashchange", this._handleRouteState);
+    }
+  };
+
   navigate = (path) => {
+    if (this.isHash === true) {
+      window.location.hash = path;
+    }
     history.pushState({}, "", path);
     this.route(path);
   };
@@ -73,6 +86,14 @@ class Router {
     this.route(window.location.pathname);
   };
 
+  _handleRouteState = () => {
+    const path = this.isHash
+      ? window.location.hash.replace("#", "")
+      : window.location.pathname;
+
+    this.route(path);
+  };
+
   replaceBodyHtml = (render, ...guards) => {
     let skip = false;
     if (guards) {
@@ -89,7 +110,7 @@ class Router {
   };
 }
 
-const router = new Router();
+const router = new Router(false);
 
 // enumerable을 이용한 순회(배열을 만들지 않고 객체를 순회하여 최적화)
 for (const key in STATIC_PAGES) {
