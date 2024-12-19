@@ -15,7 +15,6 @@ class FeatureStore extends Store {
     if (feature.includes("/")) {
       feature = this._pathToFeature(feature);
     }
-    console.log(feature);
     this._setState({ feature });
   };
 

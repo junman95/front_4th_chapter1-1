@@ -60,8 +60,7 @@ class Router {
     }
   };
 
-  navigate = (path, redirect) => {
-    console.log("redirect", redirect, path);
+  navigate = (path) => {
     if (this.isHash === true) {
       window.location.hash = path;
     }
@@ -81,8 +80,6 @@ class Router {
   };
 
   // popstate 발동 시 라우팅 해주는 함수(최초 인스턴스화 시에 이벤트 리스너로 등록)
-  // TO ASK : 예제 코드에서는 메서드로 선언 되어 있어, this바인딩을 해주는데, 그러한 점을 화살표 함수로 변경해 해결했음.
-  //          메서드 작성후 this바인딩을 해주는 이유가 무엇인지 궁금함.
   _handlePopState = () => {
     this.route(window.location.pathname);
   };
@@ -101,7 +98,7 @@ class Router {
       for (const guard of guards) {
         const redirectPath = guard();
         if (redirectPath) {
-          this.navigate(redirectPath, true);
+          this.navigate(redirectPath);
           skip = true;
           return;
         }
