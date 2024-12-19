@@ -16,7 +16,7 @@ const STATIC_PAGES = {
     path: "/profile",
     guards: [
       () => {
-        if (userStore.getUser() === null) return "/login";
+        if (!userStore.getUser()) return "/login";
       },
     ],
     page: ProfilePage,
@@ -60,7 +60,8 @@ class Router {
     }
   };
 
-  navigate = (path) => {
+  navigate = (path, redirect) => {
+    console.log("redirect", redirect, path);
     if (this.isHash === true) {
       window.location.hash = path;
     }
@@ -100,7 +101,7 @@ class Router {
       for (const guard of guards) {
         const redirectPath = guard();
         if (redirectPath) {
-          this.navigate(redirectPath);
+          this.navigate(redirectPath, true);
           skip = true;
           return;
         }
