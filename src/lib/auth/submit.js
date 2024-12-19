@@ -2,6 +2,7 @@ import router, { STATIC_PAGES } from "@/network/router/Router";
 import User from "./User";
 import { log } from "@/util/common/log";
 import userStore from "@/stores/UserStore";
+import featureStore from "@/stores/FeatureStore";
 
 const onLoginSubmit = () => {
   document.querySelector("form").addEventListener("submit", (e) => {
@@ -20,6 +21,7 @@ const onLoginSubmit = () => {
     }
 
     userStore.setUser(user);
+    featureStore.setFeature("main");
     router.navigate(STATIC_PAGES.main.path);
   });
 };

@@ -1,4 +1,5 @@
 import router, { STATIC_PAGES } from "@/network/router/Router";
+import featureStore from "@/stores/FeatureStore";
 
 const onRenderNavBar = () => {
   const rootNav = document.querySelector("nav#root-nav");
@@ -9,6 +10,7 @@ const onRenderNavBar = () => {
     if (!e.target.dataset.path) return;
 
     const path = e.target.dataset.path;
+    featureStore.setFeature(path);
     e.preventDefault();
     router.navigate(STATIC_PAGES[path].path);
   });
