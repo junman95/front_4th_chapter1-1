@@ -1,30 +1,189 @@
-var F=Object.defineProperty;var P=(e,t,s)=>t in e?F(e,t,{enumerable:!0,configurable:!0,writable:!0,value:s}):e[t]=s;var a=(e,t,s)=>P(e,typeof t!="symbol"?t+"":t,s);(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const n of document.querySelectorAll('link[rel="modulepreload"]'))o(n);new MutationObserver(n=>{for(const r of n)if(r.type==="childList")for(const b of r.addedNodes)b.tagName==="LINK"&&b.rel==="modulepreload"&&o(b)}).observe(document,{childList:!0,subtree:!0});function s(n){const r={};return n.integrity&&(r.integrity=n.integrity),n.referrerPolicy&&(r.referrerPolicy=n.referrerPolicy),n.crossOrigin==="use-credentials"?r.credentials="include":n.crossOrigin==="anonymous"?r.credentials="omit":r.credentials="same-origin",r}function o(n){if(n.ep)return;n.ep=!0;const r=s(n);fetch(n.href,r)}})();class i{static getUser(){return JSON.parse(localStorage.getItem("user"))}}a(i,"setUser",t=>{const o={...JSON.parse(localStorage.getItem("user")),...t};return localStorage.setItem("user",JSON.stringify({...o})),o}),a(i,"clearUser",()=>(localStorage.removeItem("user"),null)),a(i,"validateUserLogin",t=>t.username);const U=()=>`<footer class="bg-gray-200 p-4 text-center">
+var F = Object.defineProperty;
+var P = (e, t, s) =>
+  t in e
+    ? F(e, t, { enumerable: !0, configurable: !0, writable: !0, value: s })
+    : (e[t] = s);
+var a = (e, t, s) => P(e, typeof t != "symbol" ? t + "" : t, s);
+(function () {
+  const t = document.createElement("link").relList;
+  if (t && t.supports && t.supports("modulepreload")) return;
+  for (const n of document.querySelectorAll('link[rel="modulepreload"]')) o(n);
+  new MutationObserver((n) => {
+    for (const r of n)
+      if (r.type === "childList")
+        for (const b of r.addedNodes)
+          b.tagName === "LINK" && b.rel === "modulepreload" && o(b);
+  }).observe(document, { childList: !0, subtree: !0 });
+  function s(n) {
+    const r = {};
+    return (
+      n.integrity && (r.integrity = n.integrity),
+      n.referrerPolicy && (r.referrerPolicy = n.referrerPolicy),
+      n.crossOrigin === "use-credentials"
+        ? (r.credentials = "include")
+        : n.crossOrigin === "anonymous"
+          ? (r.credentials = "omit")
+          : (r.credentials = "same-origin"),
+      r
+    );
+  }
+  function o(n) {
+    if (n.ep) return;
+    n.ep = !0;
+    const r = s(n);
+    fetch(n.href, r);
+  }
+})();
+class i {
+  static getUser() {
+    return JSON.parse(localStorage.getItem("user"));
+  }
+}
+a(i, "setUser", (t) => {
+  const o = { ...JSON.parse(localStorage.getItem("user")), ...t };
+  return localStorage.setItem("user", JSON.stringify({ ...o })), o;
+}),
+  a(i, "clearUser", () => (localStorage.removeItem("user"), null)),
+  a(i, "validateUserLogin", (t) => t.username);
+const U = () => `<footer class="bg-gray-200 p-4 text-center">
         <p>&copy; 2024 항해플러스. All rights reserved.</p>
-      </footer>`,d=class d{constructor(t){a(this,"_setState",t=>{this.state={...this.state,...t}});a(this,"_getState",()=>this.state);if(d.instance)return d.instance;d.instance=this,this.state=t}};a(d,"instance",null);let g=d;class $ extends g{constructor(){const s=window.location.pathname;super({feature:s});a(this,"getFeature",()=>this._getState().feature);a(this,"setFeature",s=>{s.includes("/")&&(s=this._pathToFeature(s)),this._setState({feature:s})});a(this,"_pathToFeature",s=>({"/":"main","/profile":"profile","/login":"login","/logout":"logout"})[s])}}a($,"instance",null);const h=new $,x={active:"text-blue-600",inactive:"text-gray-600"},M=({path:e,label:t,active:s=!1})=>`
+      </footer>`,
+  d = class d {
+    constructor(t) {
+      a(this, "_setState", (t) => {
+        this.state = { ...this.state, ...t };
+      });
+      a(this, "_getState", () => this.state);
+      if (d.instance) return d.instance;
+      (d.instance = this), (this.state = t);
+    }
+  };
+a(d, "instance", null);
+let g = d;
+class $ extends g {
+  constructor() {
+    const s = window.location.pathname;
+    super({ feature: s });
+    a(this, "getFeature", () => this._getState().feature);
+    a(this, "setFeature", (s) => {
+      s.includes("/") && (s = this._pathToFeature(s)),
+        this._setState({ feature: s });
+    });
+    a(
+      this,
+      "_pathToFeature",
+      (s) =>
+        ({
+          "/": "main",
+          "/profile": "profile",
+          "/login": "login",
+          "/logout": "logout",
+        })[s],
+    );
+  }
+}
+a($, "instance", null);
+const h = new $(),
+  x = { active: "text-blue-600", inactive: "text-gray-600" },
+  M = ({ path: e, label: t, active: s = !1 }) => `
     <li>
       <a href=${`/${e}`} id="${e}" data-path="${e}" 
-      class="font-bold ${s?x.active:x.inactive}">${t}</a>
+      class="font-bold ${s ? x.active : x.inactive}">${t}</a>
     </li>
-  `;class _ extends g{constructor(){super({user:i.getUser()});a(this,"getUser",()=>this._getState().user);a(this,"setUser",s=>{s&&(this._setState({user:s}),i.setUser(s))});a(this,"clearUser",()=>{this._setState({user:null}),i.clearUser()})}}const c=new _,m={main:{path:"main",label:"홈"},profile:{path:"profile",label:"프로필"},login:{path:"login",label:"로그인"},logout:{path:"logout",label:"로그아웃"}},j=[m.main,m.login],I=[m.main,m.profile,m.logout],N=()=>{const t=c.getUser()?I:j,s=h.getFeature();return`
+  `;
+class _ extends g {
+  constructor() {
+    super({ user: i.getUser() });
+    a(this, "getUser", () => this._getState().user);
+    a(this, "setUser", (s) => {
+      s && (this._setState({ user: s }), i.setUser(s));
+    });
+    a(this, "clearUser", () => {
+      this._setState({ user: null }), i.clearUser();
+    });
+  }
+}
+const c = new _(),
+  m = {
+    main: { path: "main", label: "홈" },
+    profile: { path: "profile", label: "프로필" },
+    login: { path: "login", label: "로그인" },
+    logout: { path: "logout", label: "로그아웃" },
+  },
+  j = [m.main, m.login],
+  I = [m.main, m.profile, m.logout],
+  N = () => {
+    const t = c.getUser() ? I : j,
+      s = h.getFeature();
+    return `
 <nav id='root-nav' class="bg-white shadow-md p-2 sticky top-14">
         <ul class="flex justify-around">
-          ${t.map(o=>M({...o,active:s===o.path})).join("")} 
+          ${t.map((o) => M({ ...o, active: s === o.path })).join("")} 
           
         </ul>
       </nav>
-      `},H=function(){function e(){return`<div>
+      `;
+  },
+  H = function () {
+    function e() {
+      return `<div>
     <header class="bg-blue-600 text-white p-4 sticky top-0">
         <h1 class="text-2xl font-bold">항해플러스</h1>
       </header>
   ${N()}
-  </div>`}return e()};function f(e){console.log(e)}const B=()=>{document.querySelector("form").addEventListener("submit",e=>{e.preventDefault();const s={username:new FormData(e.target).get("username"),email:"",bio:""};if(!i.validateUserLogin(s)){alert("이메일과 비밀번호를 입력해주세요.");return}c.setUser(s),h.setFeature("main"),l.navigate(p.main.path)})},T=()=>{var e;(e=document.querySelector("nav"))==null||e.addEventListener("click",t=>{t.target.dataset.path==="logout"&&(c.clearUser(),f(p.login.path),l.navigate(p.login.path))})},E=()=>{document.querySelector("nav#root-nav")&&document.querySelector("nav#root-nav").addEventListener("click",t=>{if(!t.target.dataset.path)return;const s=t.target.dataset.path;h.setFeature(s),t.preventDefault(),l.navigate(p[s].path)})},D=()=>{E(),T()},w=()=>{const e=i.getUser();return`
+  </div>`;
+    }
+    return e();
+  };
+function f(e) {
+  console.log(e);
+}
+const B = () => {
+    document.querySelector("form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const s = {
+        username: new FormData(e.target).get("username"),
+        email: "",
+        bio: "",
+      };
+      if (!i.validateUserLogin(s)) {
+        alert("이메일과 비밀번호를 입력해주세요.");
+        return;
+      }
+      c.setUser(s), h.setFeature("main"), l.navigate(p.main.path);
+    });
+  },
+  T = () => {
+    var e;
+    (e = document.querySelector("nav")) == null ||
+      e.addEventListener("click", (t) => {
+        t.target.dataset.path === "logout" &&
+          (c.clearUser(), f(p.login.path), l.navigate(p.login.path));
+      });
+  },
+  E = () => {
+    document.querySelector("nav#root-nav") &&
+      document.querySelector("nav#root-nav").addEventListener("click", (t) => {
+        if (!t.target.dataset.path) return;
+        const s = t.target.dataset.path;
+        h.setFeature(s), t.preventDefault(), l.navigate(p[s].path);
+      });
+  },
+  D = () => {
+    E(), T();
+  },
+  w = () => {
+    const e = i.getUser();
+    return `
   <div class="bg-gray-100 min-h-screen flex justify-center">
     <div class="max-w-md w-full">
       ${H()}
       
 
       <main class="p-4">
-        ${e?`<div class="mb-4 bg-white rounded-lg shadow p-4">
+        ${
+          e
+            ? `<div class="mb-4 bg-white rounded-lg shadow p-4">
               <textarea
                 class="w-full p-2 border rounded"
                 placeholder="무슨 생각을 하고 계신가요?"
@@ -32,7 +191,9 @@ var F=Object.defineProperty;var P=(e,t,s)=>t in e?F(e,t,{enumerable:!0,configura
               <button class="mt-2 bg-blue-600 text-white px-4 py-2 rounded">
                 게시
               </button>
-            </div>`:""}
+            </div>`
+            : ""
+        }
 
         <div class="space-y-4">
 
@@ -120,7 +281,12 @@ var F=Object.defineProperty;var P=(e,t,s)=>t in e?F(e,t,{enumerable:!0,configura
       ${U()}
     </div>
   </div>
-`},O=(e,t)=>{t?e.querySelector(t).innerHTML=w():e.innerHTML=w(),D()},y=()=>`
+`;
+  },
+  O = (e, t) => {
+    t ? (e.querySelector(t).innerHTML = w()) : (e.innerHTML = w()), D();
+  },
+  y = () => `
   <main class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="bg-white p-8 rounded-lg shadow-md w-full text-center" style="max-width: 480px">
       <h1 class="text-2xl font-bold text-blue-600 mb-4">항해플러스</h1>
@@ -134,7 +300,11 @@ var F=Object.defineProperty;var P=(e,t,s)=>t in e?F(e,t,{enumerable:!0,configura
       </a>
     </div>
   </main>
-`,A=(e,t)=>{t?e.querySelector(t).innerHTML=y():e.innerHTML=y()},S=()=>`
+`,
+  A = (e, t) => {
+    t ? (e.querySelector(t).innerHTML = y()) : (e.innerHTML = y());
+  },
+  S = () => `
   <main class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
       <h1 class="text-2xl font-bold text-center text-blue-600 mb-8">항해플러스</h1>
@@ -156,7 +326,28 @@ var F=Object.defineProperty;var P=(e,t,s)=>t in e?F(e,t,{enumerable:!0,configura
       </div>
     </div>
   </main>
-`,R=()=>{B()},q=(e,t)=>{t?e.querySelector(t).innerHTML=S():e.innerHTML=S(),R()},k=()=>{document.getElementById("profile-form").addEventListener("submit",e=>{e.preventDefault();const t=new FormData(e.target),s={username:t.get("username"),email:t.get("email"),bio:t.get("bio")};c.setUser(s)})},L=()=>{const e=c.getUser();return`
+`,
+  R = () => {
+    B();
+  },
+  q = (e, t) => {
+    t ? (e.querySelector(t).innerHTML = S()) : (e.innerHTML = S()), R();
+  },
+  k = () => {
+    document.getElementById("profile-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const t = new FormData(e.target),
+        s = {
+          username: t.get("username"),
+          email: t.get("email"),
+          bio: t.get("bio"),
+        };
+      c.setUser(s);
+    });
+  },
+  L = () => {
+    const e = c.getUser();
+    return `
     <div class="bg-gray-100 min-h-screen flex justify-center">
       <div class="max-w-md w-full">
         ${H()}
@@ -218,4 +409,107 @@ var F=Object.defineProperty;var P=(e,t,s)=>t in e?F(e,t,{enumerable:!0,configura
         ${U()}
       </div>
     </div>
-`},J=()=>{E(),T(),k()},C=(e,t)=>{t?e.querySelector(t).innerHTML=L():e.innerHTML=L(),J()},p={main:{path:"/",page:O},profile:{path:"/profile",guards:[()=>{if(!c.getUser())return"/login"}],page:C},login:{path:"/login",guards:[()=>{if(c.getUser())return"/"}],page:q},logout:{path:"/logout",page:()=>null},404:{path:"/404",page:A}},u=class u{constructor(t=!1){a(this,"addRoute",(t,s)=>{this.routes[t]=s});a(this,"toggleHash",t=>{this.isHash=t,this.isHash?window.addEventListener("hashchange",this._handleRouteState):window.removeEventListener("hashchange",this._handleRouteState)});a(this,"navigate",t=>{this.isHash===!0&&(window.location.hash=t),history.pushState({},"",t),this.route(t)});a(this,"route",t=>{console.log(t,"path",this.isHash);const s=this.routes[t];s?(f(`Routing to ${t}`),s()):(f(`Cannot route to ${t}`),this.routes["/404"]())});a(this,"_handlePopState",()=>{this.route(window.location.pathname)});a(this,"_handleRouteState",()=>{const t=this.isHash?window.location.hash.replace("#",""):window.location.pathname;this.route(t)});a(this,"replaceBodyHtml",(t,...s)=>{let o=!1;if(s)for(const n of s){console.log(s,"guards");const r=n();if(console.log(r,"redirectPath"),r){this.navigate(r),o=!0;return}}!o&&t(document.body,"#root")});if(u.instance)return u.instance;this.isHash=t,u.instance=this,this.routes={},window.addEventListener("popstate",this._handlePopState)}};a(u,"instance",null);let v=u;const l=new v(!1);for(const e in p){const t=p[e];l.addRoute(t.path,()=>{t.guards?l.replaceBodyHtml(t.page,...t.guards):l.replaceBodyHtml(t.page)})}const W=()=>{c.setUser(i.getUser()),h.setFeature(window.location.pathname)};W();window.addEventListener("load",()=>{window.location.hash?l.route(window.location.hash.replace("#","")):l.route(window.location.pathname),window.location.hash&&l.toggleHash(!0)});
+`;
+  },
+  J = () => {
+    E(), T(), k();
+  },
+  C = (e, t) => {
+    t ? (e.querySelector(t).innerHTML = L()) : (e.innerHTML = L()), J();
+  },
+  p = {
+    main: { path: "/", page: O },
+    profile: {
+      path: "/profile",
+      guards: [
+        () => {
+          if (!c.getUser()) return "/login";
+        },
+      ],
+      page: C,
+    },
+    login: {
+      path: "/login",
+      guards: [
+        () => {
+          if (c.getUser()) return "/";
+        },
+      ],
+      page: q,
+    },
+    logout: { path: "/logout", page: () => null },
+    404: { path: "/404", page: A },
+  },
+  u = class u {
+    constructor(t = !1) {
+      a(this, "addRoute", (t, s) => {
+        this.routes[t] = s;
+      });
+      a(this, "toggleHash", (t) => {
+        (this.isHash = t),
+          this.isHash
+            ? window.addEventListener("hashchange", this._handleRouteState)
+            : window.removeEventListener("hashchange", this._handleRouteState);
+      });
+      a(this, "navigate", (t) => {
+        this.isHash === !0 && (window.location.hash = t),
+          history.pushState({}, "", t),
+          this.route(t);
+      });
+      a(this, "route", (t) => {
+        console.log(t, "path", this.isHash);
+        const s = this.routes[t];
+        s
+          ? (f(`Routing to ${t}`), s())
+          : (f(`Cannot route to ${t}`), this.routes["/404"]());
+      });
+      a(this, "_handlePopState", () => {
+        this.route(window.location.pathname);
+      });
+      a(this, "_handleRouteState", () => {
+        const t = this.isHash
+          ? window.location.hash.replace("#", "")
+          : window.location.pathname;
+        this.route(t);
+      });
+      a(this, "replaceBodyHtml", (t, ...s) => {
+        let o = !1;
+        if (s)
+          for (const n of s) {
+            console.log(s, "guards");
+            const r = n();
+            if ((console.log(r, "redirectPath"), r)) {
+              this.navigate(r), (o = !0);
+              return;
+            }
+          }
+        !o && t(document.body, "#root");
+      });
+      if (u.instance) return u.instance;
+      (this.isHash = t),
+        (u.instance = this),
+        (this.routes = {}),
+        window.addEventListener("popstate", this._handlePopState);
+    }
+  };
+a(u, "instance", null);
+let v = u;
+const l = new v(!1);
+for (const e in p) {
+  const t = p[e];
+  l.addRoute(t.path, () => {
+    t.guards
+      ? l.replaceBodyHtml(t.page, ...t.guards)
+      : l.replaceBodyHtml(t.page);
+  });
+}
+const W = () => {
+  c.setUser(i.getUser()), h.setFeature(window.location.pathname);
+};
+W();
+window.addEventListener("load", () => {
+  window.location.hash
+    ? l.route(window.location.hash.replace("#", ""))
+    : l.route(window.location.pathname),
+    window.location.hash && l.toggleHash(!0);
+});
