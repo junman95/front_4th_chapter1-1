@@ -2,6 +2,7 @@ import { defineConfig } from "vitest/config";
 import path from "path";
 
 export default defineConfig({
+  base: process.env.NODE_ENV === "production" ? "/front-5th-chapter1-1/" : "/",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
