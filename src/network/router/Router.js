@@ -71,6 +71,7 @@ class Router {
 
   route = (path) => {
     console.log(path, "path", this.isHash);
+    path.replace("/front_4th_chapter1-1/", "/");
     const handler = this.routes[path];
     if (handler) {
       log(`Routing to ${path}`);
